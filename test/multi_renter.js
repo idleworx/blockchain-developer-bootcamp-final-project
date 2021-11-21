@@ -15,42 +15,18 @@ contract("MultiRenter", function (accounts) {
 
 	beforeEach(async () => {
 		instance = await MultiRenter.deployed("10000000000000000"); //or deployed?
-		// instance = await MultiRenter.new("10000000000000000");
 	});
 
-	// describe("Landlords", () => {
-	// 	it("initial owners should be 10", async () => {
-	// 		const countLandlords = instance.landlordCount.call();
-	// 		assert.equal(countLandlords.toNumber(), 10, 'Initial landlords should be 10');
-	// 	});
+	// it("should assert true", async function () {
+	// 	return assert.isTrue(true);
 	// });
 
-
-	//contract instance with constructor
-	// const accounts = await web3.eth.getAccounts();
-	// const txParams = {
-	//     from: accounts[0]
-	// };
-	// const instance = await Test.new("test", txParams);
-
-
-	// await instance.setX(42 {from: acoutns[0]})
-    
-
-	it("should assert true", async function () {
-		return assert.isTrue(true);
-	});
-
 	it("initial listing fee should be 0.01 ETH", async () => {
-		// const instance = await MultiRenter.deployed();
-		// const instance = await MultiRenter.new("10000000000000000");
 		const listingFee = await instance.listingFee();
 		
 		//todo: check actual eth value
 		//https://web3js.readthedocs.io/en/v1.2.9/web3-utils.html
-
-		// assert.equal(new BN(listingFee.toString()), new BN(10*18), "Initial listing fee is wrong")
-		// assert.equal(web3.utils.toWei(listingFee), web3.utils.toWei('12', 'ether'), "Initial listing fee is wrong")
+	
 		assert.equal(new web3.utils.BN(listingFee).toString(), new web3.utils.BN("10000000000000000").toString(), "Initial listing fee is wrong")
 	
 	});
@@ -72,9 +48,10 @@ contract("MultiRenter", function (accounts) {
 			await instance.setListingFee("50000000000000000", { from: acct2 } )	
 		}
 		catch(err){
-			// console.log(err);
+			// TODO: better https://github.com/trufflesuite/truffle/issues/498#issuecomment-386777359
 			assert(true, "Exception thrown because not the owner called it")
 		}
+
 		//listing fee is not changed
 		const newListingFee2 = await instance.listingFee.call();
 		assert.equal(
@@ -82,35 +59,91 @@ contract("MultiRenter", function (accounts) {
 			new web3.utils.BN(newListingFee2).toString(),
 		    "New listing fee is not 20000000000000000"
 		)
-		
 	});
 
 	it("only a landlord can list a property", async () => {
+		
+		const listingFee = await instance.listingFee();
 
+		await instance.becomeLandlord({from: _owner}); //_owner becomes a landlord
+		
+		let l = await instance.isLandlord(_owner);
+		console.log("Is landlord:", l);
+
+		await instance.listRentalProperty.sendTransaction(
+			"123 Property 1", 10, "10000000000000000",
+			{
+			from: _owner, 
+			to: MultiRenter.address, 
+			value: listingFee
+			}
+		);
+		assert(true, "No error thrown")
+	});
+
+	it("a non landlord can't list a property", async () => {
+		
+		//account 2 tries to list a property
+		const listingFee = await instance.listingFee();
+
+		try{
+			await instance.listRentalProperty.sendTransaction(
+				"123 Property 1", 10, "10000000000000000",
+				{
+				from: acct2, 
+				to: MultiRenter.address, 
+				value: listingFee.toString()
+				}
+			);
+		}
+		catch(err){
+			assert(true, "Exception was thrown because acct is not a landlord")
+		}
 	});
 	
+	//https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions
+	it("someone can rent the property", async () => {
 
-	it("if a landlord doesn't pay the listing fee, they can't list the property", async () => {
+		const listingFee = await instance.listingFee();
+		
+		//landlord registered
 
-	});
-	
-	it("can only rent a property that exists", async () => {
+		await instance.becomeLandlord({from: _owner}); //_owner becomes a landlord
+		
+		let l = await instance.isLandlord(_owner);
+		console.log("Is landlord:", l);
 
-	});
+		//landlord lists property
+		let propertyIDPromise = await instance.listRentalProperty.sendTransaction(
+			"123 Property 2", 10, "25000000000000000",
+			{
+			from: _owner, 
+			to: MultiRenter.address, 
+			value: listingFee
+			}
+		);
 
-	it("owner should have at least 15 ETH", () => {
-		MultiRenter.deployed()
-			.then(instance => instance.getBalance.call(accounts[0]))
-			.then(balance => {
-				assert.greaterThan(
-					balance.valueOf(),
-					15,
-					"Owner account doesn't have 15 ETH minimum"
-				)
+		let propertyID = propertyIDPromise.logs[0].args[0].toNumber()
+		console.log("PropertyID:",propertyID);
+		
+		//renter rents property
+		await instance.rentProperty.sendTransaction(
+			propertyID,
+			{
+			  from: acct2, 
+			  to: MultiRenter.address, 
+			  value: "25000000000000000"
 			});
-		console.log("Blah")	
+
 	});
 
-	
-	//const balance = await web3.eth.balance(accoutns[0])
+	it("owner should have at least 0.5 ETH", async () => {
+		let balance = await web3.eth.getBalance(_owner);
+		console.log("balance:",balance);
+		assert.isTrue(
+			new web3.utils.BN(balance.toString()) >=
+			new web3.utils.BN("10000000000000000".toString())
+		)
+	});
+
 });
