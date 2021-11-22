@@ -21,7 +21,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a id="mm-detected" class="nav-link active" aria-current="page" href="#"></a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
@@ -50,25 +50,31 @@
     
     <div class="row">
       <div class="col">
-        <div id="mm-detected"></div>
-        <!-- <br>
-        <button id="mm-connect">Connect to Metamask Wallet</button> -->
         <br>
-        <div id="mm-current-account"></div>
-        <br>
+        <div class="alert alert-info" role="alert">
+          <h4 class="alert-heading"></h4>
+          <p>This is a property rental marketplace simulator with landlords and renters (on the blockchain). Consensys Bootcamp Final Project</p>
+          <hr>
+          <p class="mb-0">
+            <div id="mm-current-account"></div>
+          </p>
+        </div>
+        
       </div>
     </div>
     
     <div class="row">
 
       <div class="col">
-        <h2>Current Wallet (you)</h2> 
-
+        <h4>Current Wallet Info</h4> 
+        <!-- <p>Info about your </p> -->
         <div id="divCurrentLandlord">
         </div>
-        <button id="btnBecomeLandlord" class="btn btn-primary">Become Landlord</button>
+      
         
         <div id="divAddProperty">
+          <br><br>
+          <h4>List Rental Property <button id="btnBecomeLandlord" class="btn btn-primary">Become Landlord</button></h4>
           <form id="frmAddProperty">
             <div class="mb-3">
               <label for="textPropertyAddress" class="form-label">Property Address</label>
@@ -97,9 +103,8 @@
       </div>
       
       <div class="col">
-        <h2>Contract Owner</h2>
-        <!-- <input type="text" id="updateListingFeeValue"/>
-        <button id="updateListingFee">Update Listing Fee</button> -->
+        <h4>Update Listing Fee</h4>
+        <p>Only the contract owner can use this functionality</p>
         <form class="row g-3" id="updateListingFeeForm">
           <div class="col-auto">
             <label for="updateListingFeeValue" class="visually-hidden">Update listing fee to</label>
@@ -108,13 +113,12 @@
           <div class="col-auto">
             <button id="updateListingFeeBtn" class="btn btn-primary mb-3">Update</button>
           </div>
-          <hr>
           <p>Current Earnings: <span id="lblEarnings"></span> ETH</p>
         </form>
 
       </div>
     </div>
-
+    <hr>
     <div class="row">
       <div class="col">
         <h3>Properties</h3>

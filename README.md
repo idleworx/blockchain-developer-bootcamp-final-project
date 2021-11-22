@@ -1,15 +1,18 @@
 # blockchain-developer-bootcamp-final-project
 
+Front End available at: https://idleworx.github.io/blockchain-developer-bootcamp-final-project/
 
 ## Project Structure
 
-app - index.html and js file for the frontend (built with jQuery + Web3.js)
+Project is built with Truffle, and has the standard folders:
+
+index.html - frontend ui
+app - js file for the frontend (built with jQuery + Web3.js)
 contracts - MultiRenter.sol is the main contract
 migrations - truffle migration js files
 test - truffle tests
 
-Front End available at: https://idleworx.github.io/blockchain-developer-bootcamp-final-project/
-
+The UI is built with jQuery and Boostrap. Why jQuery? Because I haven't worked with React yet, and it's been a while since I did Angular and VueJS (my prefered spa framework). Also because I hate webpack with a passion. So I went old school.
 
 ## Project Description
 
@@ -36,7 +39,7 @@ struct RentalProperty {
 ```
 
 
-**Context**
+**Additional Info**
 
 In the real world once a property is rented it would have a bluetooth enabled smart lock with blockchain integration that would allow a renter to open the door.
 
@@ -54,7 +57,9 @@ I trimmed down the project to the above functionality, which allows a landlord t
 - a property must exist to be rented
 
 
-## How it will work
+## How it works
+
+- User is prompted to connect with Metamask
 
 - A **Landlord** can list a unit for rent by specifying the following
 -- length of time to rent it (30 days)
@@ -63,3 +68,12 @@ I trimmed down the project to the above functionality, which allows a landlord t
 - A **Renter** can commit to renting the unit by paying the rental fee
   
 
+## How to Run Locally
+
+- git clone
+- ```npm install```
+- create new ganache project using truffle-config.js file OR
+  spin up ganache on port: 8545
+- run: 'truffle compile' then 'truffle migrate' on the develop network
+- copy the contract address and abi into the app/dapp.js file variables
+- run on localhost as needed
