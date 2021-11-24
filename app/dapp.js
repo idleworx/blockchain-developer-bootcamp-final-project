@@ -1,6 +1,6 @@
 console.log("MultiRenter Dapp Starting")
 
-//replace this with local ganache address and abi for testing
+//replace this with local ganache address and abi for testing locally
 //this is the rinkeby address
 const contract_address = '0x4f881934C9473cfd4Ad3F0a25aEbA0dD23308FCD';
 const contract_abi = [
