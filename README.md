@@ -83,6 +83,10 @@ As a result, I didn't end up implementing the ```enter()``` function which would
 - copy the contract address and abi into the app/dapp.js file variables
 - run the app/index.html file on localhost as needed
 
+## Screen Cast Demo
+
+https://www.loom.com/share/6610075e7c854abcbaa335990b7d1028
+
 ## Ethereum Address for Certification
 
 0xe7808B9eC2Bc8DdfF3045F0691391536276697fd
