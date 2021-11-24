@@ -53,13 +53,6 @@ I trimmed down the project to the above functionality, which allows a landlord t
 
 As a result, I didn't end up implementing the ```enter()``` function which would have handled the determination of which renter, out of multiple renters within a 30 day period, would be allow to enter 'today' for example.
 
-**Limitations**
-- only a landlord can list a property for rent
-- a landlord has to pay a listing fee to list a property
-- a renter can rent a property by paying the rental fee
-- a renter can't rent a previously rented property
-- a property must exist to be rented
-
 
 ## How it works
 
@@ -72,6 +65,12 @@ As a result, I didn't end up implementing the ```enter()``` function which would
 
 - A **Renter** can rent the property by paying the rental fee (as long as it's not already rented)
   
+**Limitations**
+- only a landlord can list a property for rent (you must become one before listing a property)
+- a landlord has to pay a listing fee to list a property
+- a renter can rent a property by paying the rental fee
+- a renter can't rent a previously rented property
+- a property must exist to be rented  
 
 ## How to Run Locally
 

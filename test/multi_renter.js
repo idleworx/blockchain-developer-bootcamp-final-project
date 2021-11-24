@@ -23,12 +23,7 @@ contract("MultiRenter", function (accounts) {
 
 	it("initial listing fee should be 0.01 ETH", async () => {
 		const listingFee = await instance.listingFee();
-		
-		//todo: check actual eth value
-		//https://web3js.readthedocs.io/en/v1.2.9/web3-utils.html
-	
-		assert.equal(new web3.utils.BN(listingFee).toString(), new web3.utils.BN("10000000000000000").toString(), "Initial listing fee is wrong")
-	
+		assert.equal(new web3.utils.BN(listingFee).toString(), new web3.utils.BN("10000000000000000").toString(), "Initial listing fee is wrong")	
 	});
 
 	it("only the owner can change the listing fee", async () => {
@@ -43,12 +38,12 @@ contract("MultiRenter", function (accounts) {
 		    "New listing fee is not 20000000000000000"
 		)
 		
-		//2nd accoutn changes listing fee
+		//2nd account changes listing fee
 		try{
 			await instance.setListingFee("50000000000000000", { from: acct2 } )	
 		}
 		catch(err){
-			// TODO: better https://github.com/trufflesuite/truffle/issues/498#issuecomment-386777359
+			// TODO: future use https://github.com/trufflesuite/truffle/issues/498#issuecomment-386777359
 			assert(true, "Exception thrown because not the owner called it")
 		}
 
@@ -137,7 +132,8 @@ contract("MultiRenter", function (accounts) {
 
 	});
 
-	it("owner should have at least 0.5 ETH", async () => {
+	//for testnet / rinkeby deployment check only
+	it("owner should have at least 0.1 ETH", async () => {
 		let balance = await web3.eth.getBalance(_owner);
 		console.log("balance:",balance);
 		assert.isTrue(

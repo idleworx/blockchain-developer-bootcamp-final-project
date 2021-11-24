@@ -2,7 +2,7 @@ console.log("MultiRenter Dapp Starting")
 
 //replace this with local ganache address and abi for testing
 //this is the rinkeby address
-const contract_address = '0xe59952072d248623433aA72F5f56406bA6FebE16';
+const contract_address = '0x4f881934C9473cfd4Ad3F0a25aEbA0dD23308FCD';
 const contract_abi = [
   {
     "inputs": [
@@ -355,6 +355,19 @@ const contract_abi = [
     "payable": true
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_propertyId",
+        "type": "uint256"
+      }
+    ],
+    "name": "enter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "getPropertiesAndLandlords",
     "outputs": [
@@ -457,16 +470,12 @@ async function addProperty(contract){
   );
   
   console.log("addProperty() completed");
-  // displayCurrentLandlord(contract);
 }
 
 async function getPropertiesAndLandlords(contract){
   console.log("getPropertiesAndLandlords()");  
-  // await contract.methods.getPropertiesAndLandlords().call().then(console.log);
-  // let propertyIDs, landlordAddresses;
   var data = await contract.methods.getPropertiesAndLandlords().call();
   // console.log(data[0]);
-  // console.log(propertyIDs, landlordAddresses);
   return [data[0], data[1]];
 }
 
@@ -495,10 +504,6 @@ async function displayAllProperties(contract){
         "<button class=\"btn btn-small btn-outline-primary\" id=\"btnDetailsID_" + propertyIDs[i] + "\" name=\"btnDetails\" type=\"button\">Show Details</button>" +
         "</p>")
         .appendTo(ulProperties);
-    // var aaa = $('<a/>')
-    //     .addClass('ui-all')
-    //     .text(countries[i])
-    //     .appendTo(li);
   });
 }
 
@@ -536,19 +541,10 @@ function handleButtons(c1){
 
 async function startApp(){
 
-    // document.getElementById('mm-connect').onclick = async function(){ // = () => {}
-    //   console.log("Connecting to metamask wallet ...");
-    //   await ethereum.request({ method: 'eth_requestAccounts' });
-    // };
+   
     
     const c1 = new web3.eth.Contract(contract_abi, contract_address);
     c1.setProvider(window.ethereum); 
-
-    // $("#mm-connect").click(async function(){
-    //   console.log("Connecting to metamask wallet ...");
-    //   await ethereum.request({ method: 'eth_requestAccounts' });
-    //   $("#mm-current-account").text("Connected to: " + ethereum.selectedAddress);
-    // });
     
     console.log("Connecting to metamask wallet ...");
     await ethereum.request({ method: 'eth_requestAccounts' });
@@ -595,44 +591,6 @@ async function startApp(){
     await displayAllProperties(c1);
 
     handleButtons(c1);
-
-    
-
-
-
-    // var web3 = new Web3(window.ethereum);
-
-    // const c1 = new web3.eth.Contract(contract_abi, contract_address);
-    // // // console.log(web3);
-    // // // console.log(c1);
-    // c1.setProvider(window.ethereum); 
-
-//     document.getElementById('getValue').onclick = async ()=> {
-//         await simpleStorageContract.methods.get().call().then(console.log);
-//     }
-
-//     const mmEnable = document.getElementById('mm-connect');
-
-//     mmEnable.onclick = async () => {
-//         await ethereum.request(
-//             {method: 'etawait simpleStorageContract.methods.get().call().then(console.log);h_requestAccounts'}
-//         )
-//         const mmCurrentAccount = document.getElementById('mm-current-account');
-//         mmCurrentAccount.innerHTML += ethereum.selectedAddress;
-//     }
-
-//     const mmSubmit = document.getElementById('ss-input-button');
-//     mmSubmit.onclick = async () => {
-//          const inputBox = document.getElementById('ss-input-box');
-//          console.log(inputBox.value);
-
-// //         var web3 = new Web3(window.ethereum);
-// //         const simpleStorageContract = new web3.eth.Contract(contract_abi, contract_address);
-// //         simpleStorageContract.setProvider(window.ethereum); //metamask
-
-// //         await simpleStorageContract.methods.set(inputBox.value).call(); old version
-//          await simpleStorageContract.methods.set(inputBox.value).send({from: ethereum.selectedAddress})
-        // }
 }
 
 var web3;

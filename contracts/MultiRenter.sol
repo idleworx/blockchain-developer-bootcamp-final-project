@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.8.0 <0.9.0;
+pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -148,6 +148,10 @@ contract MultiRenter is Ownable{
         return propertiesCount;
     }
     
+    function enter(uint _propertyId) public propertyExists(_propertyId) {
+        //TODO: future. handles access to a property for multiple overlapping renters on alternate days
+    }
+
     /// @notice Returns 2 lists of the same size containing all property ids and all landlords who own them
     /// @dev This is used to be able to render all properties in the Dapp's UI
     /// @return 2 uint[] lists containing the property ids and landlord addresses that own them
@@ -163,5 +167,6 @@ contract MultiRenter is Ownable{
         property_renter[_propertyId] = msg.sender;    
         properties[_propertyId].status = Status.Rented;
     }
+
     
 }
