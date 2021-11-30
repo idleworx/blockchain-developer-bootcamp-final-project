@@ -74,14 +74,19 @@ As a result, I didn't end up implementing the ```enter()``` function which would
 
 ## How to Run Locally
 
-- git clone
-- ```npm install```
-- create new ganache project using truffle-config.js file OR
+- git clone 
+- setup new ganache project using truffle-config.js file OR
   spin up ganache on port: 8545
+- ```npm install @truffle/hdwallet-provider```
+- ```npm install @openzeppelin/contracts``` 
+See: https://www.npmjs.com/package/@openzeppelin/contracts
+- create a .secret file in the root project directory (write some dummy word in it) | only used while deploying to rinkeby so it's just needed for truffle-config.js to load properly. 
 - run: 'truffle test' to run the tests
 - run: 'truffle compile' then 'truffle migrate' on the develop network
-- copy the contract address and abi into the app/dapp.js file variables
+- copy the MultiRenter locally deployed contract address into `app/dapp.js` file variables
+- (optionally copy the ABI as well, but it should be the same as what's deployed)
 - run the app/index.html file on localhost as needed
+- point your metamask to port 8545
 
 ## Screen Cast Demo
 
