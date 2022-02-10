@@ -88,10 +88,6 @@ See: https://www.npmjs.com/package/@openzeppelin/contracts
 - run the app/index.html file on localhost as needed
 - point your metamask to port 8545
 
-## Screen Cast Demo
-
-https://www.loom.com/share/6610075e7c854abcbaa335990b7d1028
-
 ## Ethereum Address for Certification
 
 0xe7808B9eC2Bc8DdfF3045F0691391536276697fd
